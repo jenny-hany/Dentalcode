@@ -1,118 +1,187 @@
+
 import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
-        // Creating Doctors
-        Doctor doctorKaren = new Doctor("karen123", "password123", "Karen", "Smith", "karen@clinic.com", "123456789", "Dentist", new String[]{"Sunday", "Monday", "Tuesday"});
-        doctorKaren.setAvailableHours(3); // 1 PM to 4 PM
-        Doctor doctorMario = new Doctor("mario456", "password456", "Mario", "Rossi", "mario@clinic.com", "987654321", "Orthodontist", new String[]{"Wednesday", "Thursday", "Saturday"});
-        doctorMario.setAvailableHours(3); // 9 AM to 12 PM
-        Doctor doctorFayrouz = new Doctor("fayrouz789", "password789", "Fayrouz", "Ali", "fayrouz@clinic.com", "123987654", "Surgeon", new String[]{"Friday", "Monday", "Tuesday"});
-        doctorFayrouz.setAvailableHours(3); // 6 PM to 9 PM
+        Scanner input = new Scanner(System.in);
+        Dentalclinic clinic = new Dentalclinic();
 
-        String[] services = {"Fixing Teeth", "Gum Care", "Children's Dentistry"};
-        float[] servicePrices = {100.0f, 150.0f, 200.0f};
+        Doctor doctors[] = new Doctor[3];
+        doctors[0]= new Doctor();
+        doctors[0].setFirstName("carine");
+        doctors[0].setLastName("bahaa");
+        doctors[0].setEmail("carinebahaa@gmail.com");
+        doctors[0].setAvailableDays(new String[]{"Saturday" , "Sunday","Thursday"});
+        doctors[0].setAvailableHours(5);
 
-        // Create a simple clinic with these doctors
-        Dentalclinic clinic = new Dentalclinic("Smile Clinic", "20 Korba Street", services, servicePrices);
-        // Add doctors to the clinic
-        clinic.addDoctor(doctorKaren);
-        clinic.addDoctor(doctorMario);
-        clinic.addDoctor(doctorFayrouz);
-        // Display the clinic's services and prices
-        clinic.displayServicesAndPrices();
 
-        // Create patients and receptionists
-        Patient patient1 = new Patient("john123", "johnpass", "John", "Doe", "john@example.com", "5551234", 30, "O+", 70, 175);
-        Receptionist receptionist = new Receptionist("receptionist1", "recpass", "Sarah", "Connor", "sarah@clinic.com", "5555678", 25, "Female");
+        doctors[1]= new Doctor();
+        doctors[1].setFirstName("jennifer");
+        doctors[1].setLastName("hany");
+        doctors[1].setEmail("jenniferhany@gmail.com");
+        doctors[1].setAvailableDays(new String[]{"Tuesday" , "Wednesday","Thursday","Friday"});
+        doctors[1].setAvailableHours(4);
 
-        // Show available options to the patient
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
 
-        while (running) {
-            System.out.println("\nChoose an action: ");
-            System.out.println("1. View doctors");
-            System.out.println("2. Book appointment with doctor");
-            System.out.println("3. Cancel appointment");
-            System.out.println("4. Exit");
+        doctors[1]= new Doctor();
+        doctors[1].setFirstName("maria");
+        doctors[1].setLastName("ramy");
+        doctors[1].setEmail("mariaramy@gmail.com");
+        doctors[1].setAvailableDays(new String[]{"Tuesday" , "Wednesday","Thursday","Friday"});
+        doctors[1].setAvailableHours(6);
 
-            // Read the user's choice
-            int choice = scanner.nextInt();
+        clinic.addDoctor(doctors[0]);
+        clinic.addDoctor(doctors[1]);
+        clinic.addDoctor(doctors[2]);
 
-            // Consume the newline character that is left behind by nextInt()
-            scanner.nextLine();
+        clinic.setServices(new String[]{"bla0","bla1","bla2","bla3","bla4"});
+        clinic.setServicePrices(new float[]{1,2,3,4,5,});
 
-            switch (choice) {
-                case 1:
-                    // Show list of doctors
-                    System.out.println("\nDoctors available:");
-                    System.out.println(doctorKaren.getFirstName() + " - " + doctorKaren.getSpecialization());
-                    System.out.println(doctorMario.getFirstName() + " - " + doctorMario.getSpecialization());
-                    System.out.println(doctorFayrouz.getFirstName() + " - " + doctorFayrouz.getSpecialization());
-                    break;
 
-                case 2:
-                    // Choose doctor and view available slots
-                    System.out.print("Enter doctor name: ");
-                    String doctorName = scanner.nextLine();
-                    Doctor selectedDoctor = null;
-
-                    // Find the selected doctor
-                    if (doctorName.equalsIgnoreCase("Karen")) {
-                        selectedDoctor = doctorKaren;
-                    } else if (doctorName.equalsIgnoreCase("Mario")) {
-                        selectedDoctor = doctorMario;
-                    } else if (doctorName.equalsIgnoreCase("Fayrouz")) {
-                        selectedDoctor = doctorFayrouz;
-                    }
-
-                    if (selectedDoctor != null) {
-                        System.out.println("\nAvailable days for Dr. " + selectedDoctor.getFirstName() + ":");
-                        for (String day : selectedDoctor.getAvailableDays()) {
-                            System.out.println("- " + day);
-                        }
-                        System.out.print("\nSelect a day: ");
-                        String selectedDay = scanner.nextLine();
-
-                        // Display available slots
-                        if (selectedDoctor != null) {
-                            System.out.println("\nAvailable time slots for " + selectedDay + ":");
-                            if (selectedDay.equals("Sunday") || selectedDay.equals("Monday") || selectedDay.equals("Tuesday")) {
-                                System.out.println("1:00 PM - 4:00 PM");
-                            } else if (selectedDay.equals("Wednesday") || selectedDay.equals("Thursday") || selectedDay.equals("Saturday")) {
-                                System.out.println("9:00 AM - 12:00 PM");
-                            } else if (selectedDay.equals("Friday")) {
-                                System.out.println("6:00 PM - 9:00 PM");
-                            }
-                        }
-                        System.out.print("\nChoose time slot: ");
-                        String timeSlot = scanner.nextLine();
-
-                        // Book appointment
-                        AppointmentReservation appointment = new AppointmentReservation("2024-12-02", selectedDay, doctorName, patient1.getFirstName(), timeSlot);
-                        System.out.println("\nAppointment booked: ");
-                        appointment.displayAppointmentDetails();
-                    }
-                    break;
-
-                case 3:
-                    // Cancel appointment
-                    System.out.print("\nEnter doctor name to cancel appointment: ");
-                    String cancelDoctorName = scanner.nextLine();
-                    // Assume the appointment was found, update system
-                    System.out.println("\nAppointment with Dr. " + cancelDoctorName + " has been canceled.");
-                    break;
-
-                case 4:
-                    running = false;
-                    System.out.println("Exiting...");
-                    break;
-
-                default:
-                    System.out.println("Invalid choice. Please try again.");
-            }
-        }
-        scanner.close();
+        menu1(clinic);
     }
-}
+
+
+    static public void menu1(Dentalclinic clinic )
+    {
+        int choice;
+        Scanner input = new Scanner(System.in);
+        System.out.println("Welcome to our Dental Clinic \n" +
+                "Please choose what are you signing in as :\n" +
+                "1) Doctor \n" +
+                "2) Patient \n" +
+                "3) Receptionist \n");
+        int person = input.nextInt();
+        System.out.println("1. login \n" +
+                "2. signup ");
+        choice = input.nextInt();
+        if(person == 1)
+        {
+
+            Doctor doctor = new Doctor();
+            doctor.is_loggedIn(choice);
+            Doctor.menuDoctor();
+        }
+        else if(person == 2 )
+        {
+            Patient patient = new Patient();
+            patient.is_loggedIn(choice);
+            Patient.menuPatient(clinic);
+        }
+        else if(person == 3)
+        {
+            Receptionist receptionist = new Receptionist();
+            receptionist.is_loggedIn(choice);
+            menuReceptionist();
+        }
+    }
+
+    static public void menuReceptionist() {
+        Scanner input = new Scanner(System.in);
+        int x;
+        String username;
+        String password;
+        String firstName;
+        String lastName;
+        String email;
+        String mobileNum;
+        String specialization;
+        double availableHours;
+        int age;
+        String gender;
+
+        do {
+            System.out.println("Please Choose an action : \n " +
+                    "1) Enter your information \n" +
+                    "2) Enter Doctors information \n" +
+                    "3) Update your information \n" +
+                    "4) Update Doctors information \n" +
+                    "5) Update Patient information \n" +
+                    "6) Reserve an Appointment for a patient \n" +
+                    "7) Cancel an Appointment for a patient \n" +
+                    "8) Exit");
+            x = input.nextInt();
+            if (x == 1) {
+                System.out.println("Please enter your Username :");
+                username = input.next();
+                System.out.println("Please enter your email :");
+                email = input.next();
+                System.out.println("Please enter your password :");
+                password = input.next();
+                System.out.println("Please enter your First name :");
+                firstName = input.next();
+                System.out.println("Please enter your Last name :");
+                lastName = input.next();
+                System.out.println("Please enter your Age :");
+                age = input.nextInt();
+                System.out.println("Please enter your Gender :");
+                gender = input.next();
+                System.out.println("Please enter your mobile number :");
+                mobileNum = input.next();
+
+                Receptionist receptionist = new Receptionist();
+                continue;
+
+            } else if (x == 2) {
+                System.out.println("Please enter the number of doctors in the clinic :");
+                int Num = input.nextInt();
+                Doctor[] doctors = new Doctor[Num];
+
+
+
+                System.out.println("Please enter the information of the doctors :");
+                for (int i = 0; i < Num; i++) {
+                    System.out.println("Please enter Username :");
+                    username = input.next();
+                    System.out.println("Please enter email :");
+                    email = input.next();
+                    System.out.println("Please enter password :");
+                    password = input.next();
+                    System.out.println("Please enter First name :");
+                    firstName = input.next();
+                    System.out.println("Please enter Last name :");
+                    lastName = input.next();
+                    System.out.println("Please enter mobile number :");
+
+                    mobileNum = input.next();
+                    System.out.println("Please enter Specialization :");
+                    specialization = input.next();
+                    System.out.println("Please enter Available hours :");
+                    availableHours = input.nextDouble();
+
+                    doctors[i] = new Doctor();
+
+                    System.out.println("Please enter the next doctor's information :");
+                    continue;
+                }
+            } else if (x == 3) {
+
+            } else if (x == 4) {
+
+            } else if (x == 5) {
+
+            } else if (x == 6) {
+
+            } else if (x == 7) {
+
+            } else {
+                System.out.println("Invalid choice please try again ...");
+                continue;
+            }
+
+        } while (x != 8);
+
+
+    }
+
+
+
+
+
+
+
+    }
+
+
+

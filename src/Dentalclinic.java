@@ -8,15 +8,7 @@ public class Dentalclinic {
     private Receptionist[] receptionists; // Array to hold receptionists of the clinic
 
     // Constructor
-    public Dentalclinic(String name, String location, String[] services, float[] servicePrices) {
-        this.name = name;
-        this.location = location;
-        this.services = services;
-        this.servicePrices = servicePrices;
-        this.doctors = new Doctor[10]; // Example size, adjust as needed
-        this.patients = new Patient[10]; // Example size, adjust as needed
-        this.receptionists = new Receptionist[5]; // Example size, adjust as needed
-    }
+
 
     // Getter methods
     public String getName() {

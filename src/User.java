@@ -1,3 +1,4 @@
+import java.util.Scanner;
 public abstract class User
 {
     private String username;
@@ -5,16 +6,40 @@ public abstract class User
     private String firstName;
     private String lastName;
     private String email;
-    private String mobileNum;
+    private String patient_mobileNum;
 
-    public User(String username, String password, String firstName, String lastName, String email, String mobileNum)
+
+    public void is_loggedIn  (int choice)
     {
-        this.username = username;
-        this.password = password;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.mobileNum = mobileNum;
+
+        Scanner input = new Scanner(System.in);
+
+
+        System.out.println("1. login \n" +
+                "2. signup ");
+        if (choice==1) // log in
+        {
+            System.out.println("Enter your username :");
+            username= input.next();
+            System.out.println("Enter your password :");
+            password=input.next();
+        }
+        else if (choice == 2) // sign up
+        {
+            System.out.println("Enter username :");
+            username = input.next();
+            System.out.println("Enter password :");
+            password = input.next();
+            System.out.println("Enter first name :");
+            firstName = input.next();
+            System.out.println("Enter last name :");
+            lastName =input.next();
+            System.out.println("Enter email :");
+           email = input.next();
+            System.out.println("Enter mobile number :");
+            patient_mobileNum =input.next();
+        }
+
     }
 
     // Getters and Setters
@@ -68,15 +93,6 @@ public abstract class User
         this.email = email;
     }
 
-    public String getMobileNum()
-    {
-        return mobileNum;
-    }
-
-    public void setMobileNum(String mobileNum)
-    {
-        this.mobileNum = mobileNum;
-    }
 
     @Override
     public String toString()
