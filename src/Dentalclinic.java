@@ -7,9 +7,6 @@ public class Dentalclinic {
     private Patient[] patients; // Array to hold patients of the clinic
     private Receptionist[] receptionists; // Array to hold receptionists of the clinic
 
-    // Constructor
-
-
     // Getter methods
     public String getName() {
         return name;

@@ -22,8 +22,8 @@ public class Description {
         System.out.println("Doctors:");
         for (Doctor doctor : clinic.getDoctors()) {
             if (doctor != null) {
-                System.out.println("- Dr. " + doctor.getFirstName() + " " + doctor.getLastName() +
-                        " (Specialization: " + doctor.getSpecialization() + ")");
+                System.out.println("- Dr. " + doctor.getFirstName() + " " + doctor.getLastName()
+                        );
             }
         }
     }
