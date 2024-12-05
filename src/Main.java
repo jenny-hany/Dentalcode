@@ -3,12 +3,12 @@ import java.io.*;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.List;
-
 import static filehandlingexample.FileHandling.*;
 
-public class Main {
-
-    public static void main(String[] args) {
+public class Main
+{
+    public static void main(String[] args)
+    {
 
         Dentalclinic clinic = new Dentalclinic();
 

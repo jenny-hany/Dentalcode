@@ -3,6 +3,9 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
+import static filehandlingexample.FileHandling.readFromFile;
+import static filehandlingexample.FileHandling.writeToFile;
+
 public class Patient extends User {
     private int age;
     private String bloodType;
@@ -76,12 +79,12 @@ public class Patient extends User {
     public void save() {
         List<String> data = new ArrayList<>();
         data.add(this.toFileFormat());
-        FileHandling.writeToFile("patients.txt", data, true);  // Append to file
+        writeToFile("patients.txt", data, true);  // Append to file
     }
 
     // Method to load all patients from file
     public static List<Patient> loadAll() {
-        List<String> lines = FileHandling.readFromFile("patients.txt");
+        List<String> lines = readFromFile("patients.txt");
         List<Patient> patients = new ArrayList<>();
         for (String line : lines) {
             patients.add(Patient.fromFileFormat(line));
@@ -93,57 +96,128 @@ public class Patient extends User {
     static public void menuPatient(Dentalclinic clinic) {
         Scanner input = new Scanner(System.in);
         String serviceName;
+        System.out.println("Please enter your information to save it: ");
+//        input.nextLine();  // Consume the newline character
+        System.out.println("Enter your Age:");
+        String age = input.next();
+        System.out.println("Enter your Blood Type:");
+        String bloodType = input.next();
+        System.out.println("Enter your Weight:");
+        String weight = input.next();
+        System.out.println("Enter your Height:");
+        String height = input.next();
 
-        // Display available doctors
-        System.out.println("Choose your doctor: \n" +
-                "1. Carine Bahaa \n" +
-                "2. Jennifer Hany  \n" +
-                "3. Maria Ramy  \n");
+        System.out.println("what would you like to do: \n" +
+                "1. update your information \n" +
+                "2. reserve an appointment \n" +
+                "3. cancel an appointment \n");
 
-        int x = input.nextInt();
-        if (x == 1 || x == 2 || x == 3) {
-            clinic.displayServicesAndPrices();
-            System.out.println("Choose your service : ");
-            serviceName = input.next();
+        int num = input.nextInt();
+        if( num == 1)
+        {
 
-            // You can add logic here based on the selected doctor
-            if (x == 1) {
-                // Carine Bahaa's specific service handling
-            } else if (x == 2) {
-                // Jennifer Hany's specific service handling
-            } else if (x == 3) {
-                // Maria Ramy's specific service handling
+
+            boolean isUpdated = false;
+            List<String> data = readFromFile("patient.txt");
+            for (int i = 0; i < data.size(); i += 6) { // Assuming each patient has 6 lines of data
+
+                System.out.println(" What would you like to change?");
+                System.out.println("1) Email\n2) Mobile Number\n3) Weight\n4) Height");
+                int choice = input.nextInt();
+
+                switch (choice) {
+                    case 1: // Update Email
+                        System.out.println("Enter your new email:");
+                        String newEmail = input.next();
+                        data.set(i + 4, newEmail); // Update email (5th line)
+                        isUpdated = true;
+                        break;
+                    case 2: // Update Mobile Number
+                        System.out.println("Enter your new mobile number:");
+                        String newMobile = input.next();
+                        data.set(i + 5, newMobile); // Update mobile number (6th line)
+                        isUpdated = true;
+                        break;
+                    case 3: // Update Weight
+                        System.out.println("Enter your new weight:");
+                        String newWeight = input.next();
+                        if (data.size() > i + 6) { // Check if weight exists
+                            data.set(i + 6, newWeight); // Update weight (7th line if present)
+                        } else {
+                            data.add(i + 6, newWeight); // Add weight if missing
+                        }
+                        isUpdated = true;
+                        break;
+                    case 4: // Update Height
+                        System.out.println("Enter your new height:");
+                        String newHeight = input.next();
+                        if (data.size() > i + 7) { // Check if height exists
+                            data.set(i + 7, newHeight); // Update height (8th line if present)
+                        } else {
+                            data.add(i + 7, newHeight); // Add height if missing
+                        }
+                        isUpdated = true;
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please try again.");
+                }
+
+                break; // Exit loop after finding and updating the user
             }
 
-            // Now add the patient details into file
-            System.out.println("Please enter your information to save it: ");
-            input.nextLine();  // Consume the newline character
-            System.out.println("Enter your Age:");
-            int age = input.nextInt();
-            System.out.println("Enter your Blood Type:");
-            String bloodType = input.next();
-            System.out.println("Enter your Weight:");
-            int weight = input.nextInt();
-            System.out.println("Enter your Height:");
-            int height = input.nextInt();
-            System.out.println("Enter your Mobile Number:");
-            String mobileNum = input.next();
 
-            Patient patient = new Patient();
-            patient.setFirstName("John");  // Example first name
-            patient.setLastName("Doe");    // Example last name
-            patient.setEmail("john.doe@example.com"); // Example email
-            patient.setAge(age);
-            patient.setBloodType(bloodType);
-            patient.setWeight(weight);
-            patient.setHeight(height);
-            patient.setMobileNum(mobileNum);
+            if (isUpdated) {
+                writeToFile("patients.txt", data, false); // Save updated data back to file
+                System.out.println("Your details have been updated successfully.");
+            } else {
+                System.out.println("Username not found.");
+            }
+
+            String[] newUserData = {bloodType, age, weight, height};
+            Main.appendToFile("patient.txt", newUserData);
+
+            System.out.println("Your details have been saved successfully.");
+
+        }
+        else if( num == 2)
+        {
+            System.out.println("Choose your doctor: \n" +
+                    "1. Carine Bahaa \n" +
+                    "2. Jennifer Hany  \n" +
+                    "3. Maria Ramy  \n");
+
+            int x = input.nextInt();
+            if (x == 1 || x == 2 || x == 3) {
+                clinic.displayServicesAndPrices();
+                System.out.println("Choose your service : ");
+                serviceName = input.next();
+
+                // You can add logic here based on the selected doctor
+                if (x == 1) {
+                    // Carine Bahaa's specific service handling
+                } else if (x == 2) {
+                    // Jennifer Hany's specific service handling
+                } else if (x == 3) {
+                    // Maria Ramy's specific service handling
+                }
+        }
+        else if (num == 3)
+        {
+
+        }
+
+        // Display available doctors
+
+
+            // Now add the patient details into file
+
+
+
 
             // Save the patient details to the file
-            patient.save();
-            System.out.println("Your details have been saved successfully.");
-        } else {
-            System.out.println("Invalid choice! Please try again.");
+
+
+
         }
     }
 

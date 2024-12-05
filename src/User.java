@@ -9,7 +9,7 @@ public abstract class User
     private String firstName;
     private String lastName;
     private String email;
-    private String patient_mobileNum;
+    private String mobileNum;
     public void is_loggedIn(int choice,  String fileName ) {
         Scanner input = new Scanner(System.in);
         boolean is_exist = false;  // Initially assume the user doesn't exist
@@ -60,11 +60,11 @@ public abstract class User
                 System.out.println("Enter email :");
                 email = input.next();
                 System.out.println("Enter mobile number :");
-                patient_mobileNum = input.next();
+                mobileNum = input.next();
 
                 // Save the new user details to the file
-                String[] newUserData = {username, password, firstName, lastName, email, patient_mobileNum};
-                Main.appendToFile("patients.txt", newUserData);
+                String[] newUserData = {username, password, firstName, lastName, email, mobileNum};
+                Main.appendToFile(fileName, newUserData);
 
                 System.out.println("Signup successful. You can now login.");
                 break;  // Break out of the loop after a successful signup
