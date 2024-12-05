@@ -10,14 +10,13 @@ public abstract class User
     private String lastName;
     private String email;
     private String patient_mobileNum;
-    public void is_loggedIn(int choice) {
+    public void is_loggedIn(int choice,  String fileName ) {
         Scanner input = new Scanner(System.in);
         boolean is_exist = false;  // Initially assume the user doesn't exist
         String username, password;
 
         while (!is_exist) {  // Keep looping until login is successful
-            System.out.println("1. login \n" +
-                    "2. signup ");
+
 
             if (choice == 1) { // log in
                 System.out.println("Enter your username :");
@@ -25,7 +24,7 @@ public abstract class User
                 System.out.println("Enter your password :");
                 password = input.next();
 
-                String fileName = "patients.txt";
+
                 // Step 1: Read existing data from the file into a list
                 List<String> existingData = readFromFile(fileName);
                 boolean found = false;

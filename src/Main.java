@@ -59,20 +59,22 @@ public class Main {
         int person = input.nextInt();
 
         // Prompt for login or signup choice
-        System.out.println("1. login \n" + "2. signup ");
+
+        System.out.println("1. login \n" +
+                "2. signup ");
         choice = input.nextInt();
 
         if (person == 1) {
             Doctor doctor = new Doctor();
-            doctor.is_loggedIn(choice);
+            doctor.is_loggedIn(choice,"doctors.txt");
             Doctor.menuDoctor();
         } else if (person == 2) {
             Patient patient = new Patient();
-            patient.is_loggedIn(choice);
+            patient.is_loggedIn(choice , "patient.txt");
             Patient.menuPatient(clinic);
         } else if (person == 3) {
             Receptionist receptionist = new Receptionist();
-            receptionist.is_loggedIn(choice);
+            receptionist.is_loggedIn(choice,"receptionist.txt");
             menuReceptionist();
         }
     }
